@@ -190,90 +190,278 @@
       footer { align-items: flex-start; justify-content: center; flex-direction: column; padding: 16px 0; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } .has-js [data-reveal] { opacity: 1; transform: none; } }
+
+    /* Редакция страницы: ровный фон, единая типографика и спокойные карточки. */
+    body { background: var(--bg); }
+    .small, .art-label, .plan-title, .quest-head, .result span, .tag, .offer-price small, footer { font-family: var(--sans); letter-spacing: .02em; }
+    h1, h2, .offer-card h3, .offer-price, .work-copy h3, .result strong, .how h3, .about-visual span { font-family: var(--sans); font-weight: 600; letter-spacing: -.045em; }
+    h1 .line > span > span, .promise-quote em { color: inherit; font-style: normal; }
+    .work-art::after, .carousel-dots { display: none !important; }
+    .work:hover .plan-art, .work:hover .paper-stack, .work:hover .quest-art { transform: none; }
+    .plan-art, .paper-stack, .quest-art { transform: none; box-shadow: none; }
+    .carousel-bar { justify-content: center; position: relative; min-height: 58px; }
+    .carousel-controls { width: 100%; justify-content: space-between; align-items: center; }
+    .carousel-count { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); min-width: auto; text-align: center; }
+    .work { align-items: start; }
+    .work-art { min-height: 230px; }
+    .work-details { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 18px; }
+    .work-details summary { cursor: pointer; font-weight: 650; color: var(--blue-dark); }
+    .work-details p, .work-details li { max-width: 760px; color: #4e534b; font-size: 14px; }
+    .work-details ul { padding-left: 1.2em; }
+    .about-first { padding-top: 52px; border-top: 0; }
+    .about-photos { width:100%; }
+    .about-photo { min-height:310px; width:100%; display:block; aspect-ratio:4 / 4.4; overflow:hidden; }
+    .about-photo img { width:100%; height:100%; display:block; object-fit:cover; object-position:center 44%; }
+    .about-copy h2 { font-size: clamp(36px, 5vw, 60px); }
+    .about-copy .note { border: 0; background: transparent; padding: 0; }
+    .hero { min-height: 0; padding-top: 45px; padding-bottom: 58px; }
+    .hero-copy { max-width: 790px; }
+    .hero-steps { display: none; }
+    .hero-note { display: none; }
+    .promise { display: none; }
+    .offer { padding-top: 54px; }
+    .offer-foot { max-width: 750px; font-size: 13px; }
+    .price-terms { margin-top: 20px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
+    .price-terms article { border-top: 1px solid var(--line); padding-top: 14px; }
+    .price-terms h3 { margin: 0 0 6px; font-size: 15px; }
+    .price-terms p { margin: 0; color: var(--muted); font-size: 13px; }
+    .how { grid-template-columns: repeat(4,1fr); }
+    .how article { padding-right: 16px; }
+    .how article + article { padding-left: 16px; }
+    .contact-links { display:flex; flex-wrap:wrap; gap: 12px; }
+    .contact-links a:not(.button) { align-self:center; font-size:14px; }
+    .project-links { display:flex; flex-wrap:wrap; align-items:center; gap:10px 18px; padding-top:18px; }
+    .project-links p { margin:0; color:var(--muted); font-size:13px; }
+    .project-links a { font-size:13px; text-underline-offset:3px; }
+    .contact-links { align-items:center; }
+    .contact-links .button { margin-right:4px; }
+    .contact-links a.contact-alt { font-size:14px; }
+    @media(max-width:800px) { .work-details { grid-column:auto; } .how { grid-template-columns:1fr 1fr; } .how article:nth-child(3) { border-left:0; padding-left:0; border-top:1px solid var(--line); } .how article:nth-child(4) { border-top:1px solid var(--line); } }
+    @media(max-width:520px) { .price-terms,.how { grid-template-columns:1fr; } .how article + article { padding-left:0; border-left:0; border-top:1px solid var(--line); } .about-photo { min-height:0; aspect-ratio:1.15 / 1; } }
+
+
+    /* Стеклянная тема: прозрачные поверхности, мягкая глубина и спокойное движение. */
+    :root {
+      --glass: rgba(255,255,255,.54);
+      --glass-strong: rgba(255,255,255,.72);
+      --glass-edge: rgba(255,255,255,.82);
+      --glass-shadow: 0 16px 44px rgba(31,46,69,.08), inset 0 1px 0 rgba(255,255,255,.8);
+    }
+    body {
+      background:
+        radial-gradient(ellipse at 78% 8%, rgba(197,217,249,.34), transparent 32rem),
+        radial-gradient(ellipse at 8% 52%, rgba(217,229,198,.24), transparent 28rem),
+        var(--bg);
+      background-attachment: fixed;
+    }
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(245,245,239,.76);
+      border-bottom-color: rgba(255,255,255,.78);
+      backdrop-filter: blur(18px) saturate(1.2);
+      -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    }
+    .brand-mark {
+      background: linear-gradient(145deg, rgba(255,255,255,.9), rgba(220,230,246,.78));
+      color: var(--blue-dark); border: 1px solid var(--glass-edge);
+      box-shadow: 0 3px 12px rgba(41,66,110,.1), inset 0 1px 0 white;
+    }
+    nav a { transition: color .2s ease, opacity .2s ease; }
+    nav a:hover { color: var(--blue-dark); }
+    .hero { min-height: 480px; isolation: isolate; }
+    .hero-copy { max-width: 670px; }
+    .hero::before {
+      content: ""; position: absolute; z-index: -1; pointer-events: none;
+      width: clamp(250px, 31vw, 390px); aspect-ratio: 1; right: 5.5%; top: 55%;
+      transform: translateY(-50%); border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.92);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.18), rgba(197,216,244,.12)),
+        url("images/matvey-full.jpg") center 28% / auto 155% no-repeat;
+      box-shadow: 0 28px 70px rgba(50,70,100,.09), inset 0 2px 5px rgba(255,255,255,.9), inset 0 -16px 35px rgba(178,199,229,.15);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      animation: glass-drift 10s ease-in-out infinite;
+    }
+    .hero::after {
+      content: ""; position: absolute; z-index: -1; pointer-events: none;
+      width: clamp(190px, 24vw, 300px); aspect-ratio: 1; right: 9%; top: 55%;
+      transform: translateY(-50%) rotate(-18deg); border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.55);
+      box-shadow: 0 0 0 1px rgba(40,95,223,.05), inset 0 0 0 1px rgba(255,255,255,.24);
+      animation: orbit-breathe 8s ease-in-out infinite;
+    }
+    .button {
+      position: relative; overflow: hidden; border-radius: 999px;
+      box-shadow: 0 7px 20px rgba(40,95,223,.2), inset 0 1px 0 rgba(255,255,255,.22);
+      transition: background .25s ease, transform .25s ease, box-shadow .25s ease;
+    }
+    .button::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(110deg, transparent 25%, rgba(255,255,255,.2) 48%, transparent 70%);
+      transform: translateX(-110%); transition: transform .65s cubic-bezier(.2,.7,.2,1);
+    }
+    .button:hover { box-shadow: 0 11px 26px rgba(40,95,223,.25), inset 0 1px 0 rgba(255,255,255,.28); }
+    .button:hover::after { transform: translateX(110%); }
+    .text-link { transition: color .2s ease; }
+    .text-link:hover { color: var(--blue); }
+    .about-photo {
+      border: 1px solid var(--glass-edge); border-radius: 24px;
+      box-shadow: var(--glass-shadow); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    }
+    .about-photo img { border-radius: inherit; }
+    .work-art {
+      border: 1px solid rgba(255,255,255,.8); border-radius: 22px;
+      box-shadow: var(--glass-shadow); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease;
+    }
+    .work-art.blue { background: linear-gradient(145deg, rgba(205,222,250,.8), rgba(232,239,249,.68)); }
+    .work-art.paper { background: linear-gradient(145deg, rgba(255,255,255,.78), rgba(227,232,222,.68)); }
+    .work-art:not(.blue):not(.paper) { background: linear-gradient(145deg, rgba(225,233,213,.78), rgba(236,240,230,.68)); }
+    .work:hover .work-art { transform: translateY(-3px); box-shadow: 0 20px 48px rgba(31,46,69,.12), inset 0 1px 0 white; }
+    .plan-art { border: 1px solid rgba(255,255,255,.9); border-radius: 16px; background: rgba(255,255,255,.68); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+    .paper-doc { border: 1px solid rgba(255,255,255,.9); border-radius: 8px; box-shadow: 0 8px 24px rgba(40,50,65,.08); }
+    .quest-art { border: 1px solid rgba(255,255,255,.25); border-radius: 16px; background: rgba(30,39,51,.88); box-shadow: 0 16px 36px rgba(26,33,45,.12); }
+    .carousel { border: 1px solid rgba(255,255,255,.8); border-radius: 24px; padding: 0 22px 14px; background: rgba(255,255,255,.28); box-shadow: 0 16px 40px rgba(31,46,69,.04); }
+    .work { padding-block: 28px; }
+    .carousel-button { background: var(--glass); border-color: var(--glass-edge); box-shadow: 0 4px 14px rgba(31,46,69,.06), inset 0 1px 0 white; transition: transform .22s ease, background .22s ease, color .22s ease, box-shadow .22s ease; }
+    .carousel-button:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(40,95,223,.16), inset 0 1px 0 white; transform: translateY(-2px); }
+    .work-details { padding: 16px 18px; border: 1px solid rgba(255,255,255,.8); border-radius: 16px; background: rgba(255,255,255,.45); box-shadow: inset 0 1px 0 white; }
+    .work-details[open] { background: rgba(255,255,255,.68); }
+    .work-details summary { transition: color .2s ease; }
+    .work-details summary:hover { color: var(--blue); }
+    .work-details a { color: var(--blue-dark); text-underline-offset: 3px; }
+    .how { border: 0; gap: 12px; }
+    .how article, .price-terms article {
+      padding: 20px; border: 1px solid rgba(255,255,255,.82); border-radius: 18px;
+      background: rgba(255,255,255,.42); box-shadow: 0 10px 28px rgba(31,46,69,.045), inset 0 1px 0 white;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      transition: transform .28s ease, background .28s ease, box-shadow .28s ease;
+    }
+    .how article + article { border-left: 1px solid rgba(255,255,255,.82); }
+    .how article:hover, .price-terms article:hover { transform: translateY(-3px); background: rgba(255,255,255,.68); box-shadow: 0 16px 34px rgba(31,46,69,.08), inset 0 1px 0 white; }
+    .how article:nth-child(n) { border-top: 1px solid rgba(255,255,255,.82); }
+    .how h3 { margin-top: 15px; }
+    .offer-card { padding: 26px; border: 1px solid rgba(255,255,255,.82); border-radius: 22px; background: rgba(255,255,255,.52); box-shadow: var(--glass-shadow); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+    .offer-price { padding: 14px 18px; border: 1px solid rgba(255,255,255,.9); border-radius: 16px; background: linear-gradient(145deg, rgba(255,255,255,.86), rgba(229,236,248,.58)); box-shadow: inset 0 1px 0 white; }
+    .price-terms { gap: 12px; }
+    .price-terms article { padding: 18px; }
+    .contact { border: 1px solid rgba(255,255,255,.84); border-radius: 24px; padding: 32px; margin-bottom: 28px; background: rgba(255,255,255,.42); box-shadow: var(--glass-shadow); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+    .contact-links .contact-alt { padding: 11px 14px; border: 1px solid rgba(255,255,255,.9); border-radius: 999px; background: rgba(255,255,255,.5); text-decoration: none; transition: transform .2s ease, background .2s ease; }
+    .contact-links .contact-alt:hover { transform: translateY(-2px); background: rgba(255,255,255,.84); }
+    .project-links a { padding: 8px 12px; border: 1px solid rgba(255,255,255,.8); border-radius: 999px; background: rgba(255,255,255,.46); text-decoration: none; transition: background .2s ease, transform .2s ease; }
+    .project-links a:hover { background: rgba(255,255,255,.8); transform: translateY(-2px); }
+    .tag { border-radius: 999px; background: rgba(255,255,255,.42); }
+    .has-js [data-reveal], .has-js .section-heading, .has-js .work, .has-js .how article, .has-js .offer-card, .has-js .contact-right {
+      opacity:0; transform:translateY(18px);
+      transition: opacity .72s ease, transform .72s cubic-bezier(.2,.7,.2,1);
+      transition-delay:var(--reveal-delay,0ms);
+    }
+    .has-js [data-reveal].visible, .has-js .section-heading.visible, .has-js .work.visible, .has-js .how article.visible, .has-js .offer-card.visible, .has-js .contact-right.visible {
+      opacity:1; transform:translateY(0); transition-delay:0ms;
+    }
+    @keyframes glass-drift { 0%,100% { transform: translateY(-50%) translate3d(0,0,0) rotate(-2deg); } 50% { transform: translateY(calc(-50% - 9px)) translate3d(0,0,0) rotate(1deg); } }
+    @keyframes orbit-breathe { 0%,100% { transform: translateY(-50%) rotate(-18deg) scale(.98); opacity:.62; } 50% { transform: translateY(-50%) rotate(-9deg) scale(1.025); opacity:.9; } }
+    @media(max-width:800px) {
+      .hero { min-height: 390px; }
+      .hero-copy { max-width: min(76%, 600px); }
+      .hero::before { width: 260px; right: -3%; opacity:.72; }
+      .hero::after { width: 205px; right: 2%; }
+      .carousel { padding-inline: 16px; }
+      .how article, .how article + article { padding: 18px; border: 1px solid rgba(255,255,255,.82); }
+      .contact { padding: 24px; }
+    }
+    @media(max-width:520px) {
+      body { background-attachment: scroll; }
+      .topbar { border-radius: 0 0 16px 16px; }
+      .hero { min-height: 0; padding-top: 38px; padding-bottom: 50px; }
+      .hero-copy { max-width: 100%; }
+      .hero::before { width: 155px; right: -16px; top: 10px; transform: none; opacity:.45; }
+      .hero::after { width: 120px; right: 0; top: 28px; transform: rotate(-18deg); opacity:.5; }
+      .about-photo { border-radius: 17px; }
+      .carousel { padding-inline: 12px; border-radius: 18px; }
+      .work-art { border-radius: 18px; }
+      .work-details { padding: 14px; }
+      .how { gap: 9px; }
+      .how article, .how article + article { padding: 17px !important; }
+      .contact { border-radius: 19px; padding: 20px; }
+      .contact-links { gap: 8px; }
+      .contact-links .button { width: 100%; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      .hero::before, .hero::after { animation:none !important; }
+      .has-js [data-reveal], .has-js .section-heading, .has-js .work, .has-js .how article, .has-js .offer-card, .has-js .contact-right {
+        opacity:1 !important; transform:none !important; transition:none !important;
+      }
+    }
+
   </style>
 </head>
 <body>
   <header class="wrap topbar">
     <a class="brand" href="#top"><span class="brand-mark">М</span><span data-edit="brand">Матвей · цифровые решения</span></a>
-    <nav aria-label="Основная навигация"><a href="#offer" data-edit="nav.offer">Услуга</a><a href="#work" data-edit="nav.work">Проекты</a><a href="#approach" data-edit="nav.approach">Подход</a><a href="#about" data-edit="nav.about">Обо мне</a></nav>
+    <nav aria-label="Основная навигация"><a href="#about">Обо мне</a><a href="#work">Проекты</a><a href="#approach">Как работаю</a><a href="#offer">Стоимость</a></nav>
   </header>
-
   <main id="top">
     <section class="wrap hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <h1 id="hero-title"><span class="line"><span data-edit="hero.title1">Вникаю в задачу,</span></span><span class="line"><span>как <span data-edit="hero.title2">в свою.</span></span></span></h1>
-        <p class="hero-lead" data-edit="hero.lead">Помогаю малому бизнесу убрать лишние ручные шаги из повторяющихся процессов. Сначала разбираюсь, как всё устроено, потом подбираю решение.</p>
-        <p class="hero-note" data-edit="hero.note">Сначала я пойму, как всё устроено у вас. Потом предложу варианты и помогу пройти путь до решения, которое удобно проверить и использовать.</p>
-        <div class="cta-row"><a class="button" href="#contact"><span data-edit="hero.cta">Расскажите о своей проблеме</span><span aria-hidden="true">↗</span></a><a class="text-link" href="#work" data-edit="hero.projects">Покажу, что уже делал</a></div>
-        <div class="hero-steps" aria-label="Как я работаю"><div class="hero-step"><b>01</b><span data-edit="hero.step1">Слушаю</span></div><div class="hero-step"><b>02</b><span data-edit="hero.step2">Разбираюсь</span></div><div class="hero-step"><b>03</b><span data-edit="hero.step3">Реализую</span></div></div>
+        <div class="small eyebrow">АВТОМАТИЗАЦИЯ ДЛЯ МАЛОГО БИЗНЕСА</div>
+        <h1 id="hero-title"><span class="line"><span data-edit="hero.title1">Меньше ручной</span></span><span class="line"><span data-edit="hero.title2">работы каждый день.</span></span></h1>
+        <p class="hero-lead" data-edit="hero.lead">Помогаю упростить повторяющиеся задачи — от таблиц и документов до небольших внутренних приложений.</p>
+        <div class="cta-row"><a class="button" href="https://t.me/MLumak" target="_blank" rel="noopener noreferrer"><span data-edit="hero.cta">Обсудить задачу в Telegram</span><span aria-hidden="true">↗</span></a><a class="text-link" href="#work">Посмотреть проекты</a></div>
       </div>
     </section>
-
-    <section class="wrap promise" aria-label="Мой принцип работы" data-reveal="">
-      <p class="promise-quote"><span data-edit="promise.quote1">Мне не всё равно,</span> <em data-edit="promise.quote2">что получится</em> <span data-edit="promise.quote3">в итоге.</span></p>
-      <div class="promise-copy"><p data-edit="promise.body1">Я отношусь к задаче не как к пункту в списке. Хочу разобраться, что именно мешает, и снять с человека часть этой нагрузки.</p><p data-edit="promise.body2">Смотрим вместе, стало ли удобнее. Если решение ещё нужно проверить или доработать, я скажу об этом прямо и помогу пройти всё от начала до конца.</p></div>
+    <section class="section about-first" id="about" aria-labelledby="about-title">
+      <div class="wrap about" data-reveal="">
+        <div class="about-photos"><div class="about-photo"><img src="images/matvey-portrait.jpg" alt="Матвей, портрет на светлом фоне" fetchpriority="high" decoding="async"></div></div>
+        <div class="about-copy"><div class="small" style="color:var(--blue)">ОБО МНЕ</div><h2 id="about-title" data-edit="about.title">Матвей. Автоматизирую повторяющиеся процессы</h2><p data-edit="about.body1">Работаю с задачами малого бизнеса: разбираюсь в текущем процессе, нахожу лишние ручные шаги и собираю под них цифровые инструменты.</p><p data-edit="about.body2">Код пишу и дорабатываю сам, в том числе с помощью ИИ; C++ продолжаю изучать. Перед началом работы согласуем результат, ограничения и способ проверки. Инструменты, с которыми работаю, собрал ниже.</p><div class="note" data-edit="about.note">Мне важно, чтобы решение было понятным в работе и чтобы результат можно было проверить, а не просто получить файл с кодом.</div></div>
+      </div>
     </section>
-
-    <section class="wrap offer" id="offer" aria-labelledby="offer-title" data-reveal="">
-      <div class="offer-head"><div><div class="small" data-edit="offer.label">ПЕРВАЯ УСЛУГА</div><h2 id="offer-title" data-edit="offer.title">Начнём с одного процесса</h2></div><p data-edit="offer.intro">Перед стартом спокойно разберём задачу и поймём, подойдёт ли для неё небольшой пилот.</p></div>
-      <div class="offer-card"><div><h3 data-edit="offer.name">Пилот автоматизации</h3><p data-edit="offer.scope">Разбор одной задачи и прототип одного простого сценария — например, обработки таблицы или файла — на тестовых данных. Включены одна итерация правок и инструкция. В цену не входят сложные интеграции, публикация на сервере и постоянная поддержка.</p></div><div class="offer-price"><span data-edit="offer.price">7 000 ₽</span><small data-edit="offer.priceLabel">ДЛЯ ПЕРВЫХ ТРЁХ ПРОЕКТОВ · ДО 31.12.2026</small></div></div>
-      <p class="offer-foot" data-edit="offer.note">Сначала коротко обсудим задачу. Цена действует для первых трёх пилотов до 31 декабря 2026 года. Если задача не помещается в этот объём, я предложу отдельную оценку до начала работ.</p>
-    </section>
-
     <section class="section" id="work" aria-labelledby="work-title">
       <div class="wrap">
-        <div class="section-heading" data-reveal=""><div><h2 id="work-title" data-edit="work.title">Вот где я уже помог сделать проще</h2><p class="intro" data-edit="work.intro">Показываю проекты такими, какие они есть сейчас: с результатами, вопросами и следующими шагами.</p></div></div>
-        <div class="carousel" data-carousel="" role="region" aria-label="Кейсы, можно перелистывать" tabindex="0">
+        <div class="section-heading" data-reveal=""><div><h2 id="work-title" data-edit="work.title">Проекты и цифры</h2><p class="intro" data-edit="work.intro">Показываю, что уже работает, что ещё проверяется и где пока нет замеров.</p></div></div>
+        <div class="carousel" data-carousel="" role="region" aria-label="Проекты, можно перелистывать" tabindex="0">
           <div class="work-list" data-track="" aria-live="polite">
-          <article class="work" data-reveal="" aria-label="Кейс 1 из 3">
-            <div class="work-art blue" aria-hidden="true"><span class="art-label" data-edit="case1.artlabel">ВНУТРЕННИЙ ИНСТРУМЕНТ · БЕТА</span><div class="plan-art"><div class="plan-title"><span data-edit="case1.mocktitle">Медиаплан · размещение</span><span data-edit="case1.mockpage">01 / 04</span></div><div class="plan-grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
-            <div class="work-copy"><h3 data-edit="case1.title">Медиаплан за десять минут вместо часа</h3><p data-edit="case1.body">В рекламном агентстве менеджеры тратили на медиаплан около часа. Я разобрал процесс и собрал бота с мини-приложением, чтобы автоматизировать повторяющиеся шаги. Сейчас инструмент тестирует команда из пяти менеджеров.</p><div class="result"><strong data-edit="case1.metric">~10 мин</strong><span data-edit="case1.metricLabel">НА ТИПОВОЙ ПЛАН · ПРЕДВАРИТЕЛЬНАЯ ОЦЕНКА</span></div><p class="work-note" data-edit="case1.note">Около десяти планов уже прошли через инструмент. Индивидуальные условия менеджеры пока корректируют сами.</p><span class="tag" data-edit="case1.status">БЕТА-ТЕСТ</span></div>
-          </article>
-          <article class="work" data-reveal="" aria-label="Кейс 2 из 3">
-            <div class="work-art paper" aria-hidden="true"><span class="art-label" data-edit="case2.artlabel">УЧЕБНЫЙ МАКЕТ · ПРОВЕРКА ПО ИСТОЧНИКУ</span><div class="paper-stack"><div class="paper-doc"><b><span data-edit="case2.mock1a">СЕРТИФИКАТ</span><br><span data-edit="case2.mock1b">ОБРАЗЕЦ</span></b><i></i><i></i><mark data-edit="case2.mock1date">ДАТА</mark><i></i></div><div class="paper-doc"><b><span data-edit="case2.mock2a">ДАННЫЕ</span><br><span data-edit="case2.mock2b">ИЗ ФАЙЛА</span></b><i></i><mark data-edit="case2.mock2mark">ПРОВЕРИТЬ</mark><i></i><i></i></div><div class="paper-doc"><b data-edit="case2.mock3">ФАЙЛ · СКАН</b><i></i><i></i><mark data-edit="case2.mock3mark">ПОЛЕ</mark><i></i></div></div></div>
-            <div class="work-copy"><h3 data-edit="case2.title">Как проверить данные в сотнях сертификатов</h3><p data-edit="case2.body">Знакомому нужно обработать около 500 сертификатов: документы отличаются, часть — сканы в PDF. Сначала я собрал веб-прототип, а после уточнения процесса предложил настольное приложение и отдельный скрипт для извлечения данных.</p><p class="work-note" data-edit="case2.note">Сейчас продумываю проверку каждого найденного значения по исходному документу. Это важная часть задачи: приложение ещё в разработке, результат нужно будет сверять.</p><span class="tag" data-edit="case2.status">В РАЗРАБОТКЕ</span></div>
-          </article>
-          <article class="work" data-reveal="" aria-label="Кейс 3 из 3">
-            <div class="work-art" aria-hidden="true"><span class="art-label" data-edit="case3.artlabel">ПЛАН · ПРИВЫЧКИ · НАГРАДЫ</span><div class="quest-art"><div class="quest-head"><span data-edit="case3.mocktitle">Мой следующий шаг</span><span data-edit="case3.mockxp">+ 120 XP</span></div><div class="quest-progress"><i></i></div><div class="quest-line" data-edit="case3.mocktask1">Сделать важный шаг　+20 XP</div><div class="quest-line" data-edit="case3.mocktask2">Отметить привычку　+10 XP</div></div></div>
-            <div class="work-copy"><h3 data-edit="case3.title">Планы, которые хочется выполнять</h3><p data-edit="case3.body">Делаю для себя планировщик с уровнями, задачами и наградами. Хотелось придумать способ, который помогает не ругать себя за пропуски, а замечать маленькие шаги вперёд.</p><span class="tag" data-edit="case3.status">ПРОТОТИП</span></div>
-          </article>
+            <article class="work" aria-label="Проект 1 из 3">
+              <div class="work-art blue"><span class="art-label">МАКСИМЕДИА · БЕТА-ТЕСТ</span><div class="plan-art"><div class="plan-title"><span>Время на типовой медиаплан</span></div><div class="result"><strong>~60 → ~10 мин</strong></div><p>около −83% времени · предварительная оценка</p></div></div>
+              <div class="work-copy"><div class="small">ВНУТРЕННИЙ ИНСТРУМЕНТ</div><h3 data-edit="case1.title">Медиаплан: ориентир — 10 минут вместо часа</h3><p data-edit="case1.body">Для рекламного агентства Максимедиа собрал Telegram-бота и мини-приложение с инструментами для рутинных задач менеджеров. Сейчас решение проходит бета-тестирование.</p><div class="result"><strong>5</strong><span>МЕНЕДЖЕРОВ ТЕСТИРУЮТ</span></div><p class="work-note">Через инструмент подготовлено около 10 медиапланов. Индивидуальные скидки и условия пока корректируются вручную.</p><span class="tag">РЕЗУЛЬТАТ ПО ВРЕМЕНИ — ПРЕДВАРИТЕЛЬНЫЙ</span></div>
+              <details class="work-details"><summary>Что именно сделано и как это работает</summary><p>Менеджер использует бота и мини-приложение для повторяющихся операций при подготовке медиаплана. Вместо ручной сборки типовой план занимает ориентировочно 10 минут вместо примерно часа. Экономия денег пока не измерялась; цифра времени — предварительная оценка команды на этапе бета-теста.</p><p>Кейс опубликован с согласия Максимедиа. <a href="https://t.me/Maximediabot" target="_blank" rel="noopener noreferrer">Открыть Telegram-бота Максимедиа ↗</a></p></details>
+            </article>
+            <article class="work" aria-label="Проект 2 из 3">
+              <div class="work-art paper"><span class="art-label">ДЕСКТОПНОЕ ПРИЛОЖЕНИЕ · В РАБОТЕ</span><div class="paper-stack"><div class="paper-doc"><b>PDF / СКАН</b><i></i><i></i><mark>извлечение</mark></div><div class="paper-doc"><b>ПРОВЕРКА</b><i></i><mark>по источнику</mark><i></i></div><div class="paper-doc"><b>РЕЕСТР</b><i></i><i></i><mark>Excel / Word</mark></div></div></div>
+              <div class="work-copy"><div class="small">ДОКУМЕНТЫ → РЕЕСТРЫ</div><h3 data-edit="case2.title">Обработка около 500 сертификатов</h3><p data-edit="case2.body">Для разнородных сертификатов и паспортов, в том числе сканов PDF, разрабатывается настольное приложение. В текущей версии данные извлекаются по правилам и формируются реестры.</p><div class="result"><strong>~500</strong><span>ДОКУМЕНТОВ В ЗАДАЧЕ</span></div><p class="work-note">Время и экономия пока не замерены. Точность проверяется по исходному документу; для сканов применяется OCR.</p></div>
+              <details class="work-details"><summary>Как устроена текущая версия</summary><p>Приложение обрабатывает документы локально, без подключённой нейросети. Находит поля по заданным правилам, позволяет открыть исходник и подсвечивает фрагменты, из которых взяты значения. Поддерживает ручную проверку и выгрузку таблицы и реестров в Excel/Word.</p><p>Сканы распознаются через OCR при установленном Tesseract. Надёжность на наборе примерно из 500 документов ещё предстоит проверить; процент точности и экономию времени пока не заявляю.</p></details>
+            </article>
+            <article class="work" aria-label="Проект 3 из 3">
+              <div class="work-art"><span class="art-label">ЛИЧНЫЙ ПРОТОТИП</span><div class="quest-art"><div class="quest-head"><span>План на сегодня</span><span>задачи · прогресс</span></div><div class="quest-progress"><i></i></div><div class="quest-line">Разбить большую цель на шаги</div><div class="quest-line">Отметить выполненное</div></div></div>
+              <div class="work-copy"><div class="small">ПЛАНИРОВЩИК С ИГРОВОЙ ПОДАЧЕЙ</div><h3 data-edit="case3.title">Планирование, которое ощущается как игра</h3><p data-edit="case3.body">Личный прототип CRM-планировщика: собственные планы и задачи подаются через прогресс и игровые элементы. Сейчас это идея и развиваемый проект, без коммерческих метрик.</p><span class="tag">ПРОТОТИП · РЕЗУЛЬТАТЫ НЕ ЗАМЕРЯЛИСЬ</span></div>
+              <details class="work-details"><summary>Идея проекта</summary><p>Цель — сделать планирование своих задач более наглядным и поддерживающим: видеть следующий шаг и прогресс, а не только длинный список дел. Проект пока не запускался для внешних пользователей.</p></details>
+            </article>
           </div>
-          <div class="carousel-bar">
-            <div class="carousel-controls"><button class="carousel-button" type="button" data-prev="" aria-label="Предыдущий кейс">←</button><button class="carousel-button" type="button" data-next="" aria-label="Следующий кейс">→</button><span class="carousel-count" data-count="" aria-live="polite">01 / 03</span></div>
-            <div class="carousel-dots" aria-label="Выбрать кейс"><button class="carousel-dot" type="button" aria-label="Кейс 1" aria-current="true" data-slide="0"></button><button class="carousel-dot" type="button" aria-label="Кейс 2" aria-current="false" data-slide="1"></button><button class="carousel-dot" type="button" aria-label="Кейс 3" aria-current="false" data-slide="2"></button></div>
-          </div>
+          <div class="carousel-bar"><div class="carousel-controls"><button class="carousel-button" type="button" data-prev="" aria-label="Предыдущий проект">←</button><span class="carousel-count" data-count="" aria-live="polite">01 / 03</span><button class="carousel-button" type="button" data-next="" aria-label="Следующий проект">→</button></div></div>
         </div>
-        </div>
-      
+        <div class="project-links"><p>Другие Telegram-проекты:</p><a href="https://t.me/updatetsplnii_bot" target="_blank" rel="noopener noreferrer">@updatetsplnii_bot</a><a href="https://t.me/SophiaNailBot" target="_blank" rel="noopener noreferrer">@SophiaNailBot</a><a href="https://t.me/dminaltov_bot" target="_blank" rel="noopener noreferrer">@dminaltov_bot</a></div>
+      </div>
     </section>
-
     <section class="section" id="approach" aria-labelledby="approach-title">
-      <div class="wrap">
-        <div class="section-heading" data-reveal=""><div><h2 id="approach-title" data-edit="approach.title">Сначала поговорим. Потом решим.</h2><p class="intro" data-edit="approach.intro">Мне проще предложить толковый вариант, когда я понимаю, что происходит у вас на самом деле.</p></div></div>
-        <div class="how" data-reveal="">
-          <article><b data-edit="approach.step1.no">01 / ПОСЛУШАТЬ</b><h3 data-edit="approach.step1.title">Понять, что происходит</h3><p data-edit="approach.step1.body">Что приходится делать вручную? Что уже пробовали? Где сейчас больше всего неудобства?</p></article>
-          <article><b data-edit="approach.step2.no">02 / ПРИДУМАТЬ</b><h3 data-edit="approach.step2.title">Обсудить варианты</h3><p data-edit="approach.step2.body">Покажу, как можно упростить процесс и что для этого потребуется — без лишней сложности.</p></article>
-          <article><b data-edit="approach.step3.no">03 / ПРОВЕРИТЬ</b><h3 data-edit="approach.step3.title">Убедиться, что помогает</h3><p data-edit="approach.step3.body">Попробуем решение на вашей задаче. Если что-то не так, спокойно разберёмся и поправим.</p></article>
-        </div>
+      <div class="wrap"><div class="section-heading"><div><h2 id="approach-title">Как проходит работа</h2><p class="intro">Один понятный путь — от разбора задачи до проверенного результата.</p></div></div>
+        <div class="how"><article><b>01 / РАЗБИРАЕМ</b><h3>Фиксируем процесс</h3><p>Например, для сертификатов уточнили формат документов, объём около 500 файлов и необходимость сверки с оригиналом.</p></article><article><b>02 / ВЫБИРАЕМ</b><h3>Согласуем решение</h3><p>После уточнений веб-прототип заменили планом настольного приложения с локальной обработкой.</p></article><article><b>03 / СОБИРАЕМ</b><h3>Делаем один сценарий</h3><p>Для Максимедиа собраны бот и мини-приложение, автоматизирующие часть подготовки медиаплана.</p></article><article><b>04 / ПРОВЕРЯЕМ</b><h3>Сверяем результат</h3><p>Сначала тестируем на реальном рабочем сценарии, затем фиксируем замечания и договариваемся о следующем объёме.</p></article></div>
       </div>
     </section>
-
-    <section class="section" id="about" aria-labelledby="about-title">
-      <div class="wrap about" data-reveal="">
-        <div class="about-visual" aria-hidden="true"><span>М.</span></div>
-        <div class="about-copy"><h2 id="about-title" data-edit="about.title">Я Матвей. Мне нравится, когда у людей становится меньше возни.</h2><p data-edit="about.body1">Работаю в продажах и автоматизации бизнес-процессов. Берусь за повторяющиеся задачи: разбираюсь, как они устроены, и ищу способ убрать лишние шаги.</p><p data-edit="about.body2">Я ещё учусь программировать, поэтому не называю себя опытным разработчиком. Моя сильная сторона — внимательно разобраться в задаче, предложить варианты и вместе проверить, что получилось.</p><div class="note" data-edit="about.note">Сначала согласуем, что именно нужно сделать. Я честно обозначу ограничения и покажу результат на реальном сценарии, чтобы его можно было проверить.</div></div>
-      </div>
+    <section class="wrap offer" id="offer" aria-labelledby="offer-title">
+      <div class="offer-head"><div><div class="small" style="color:var(--blue)">УСЛОВИЯ РАБОТЫ</div><h2 id="offer-title">Пилот под ключ</h2></div><p>Один ограниченный процесс — от уточнения задачи до работающего решения, инструкции и одной итерации правок.</p></div>
+      <div class="offer-card"><div><h3>Один простой сценарий</h3><p>Я погружусь в задачу вместе с вами, предложу подходящий вариант и буду вести работу до результата — от первого разбора до проверки готового решения в вашем процессе.</p></div><div class="offer-price"><span>7 000 ₽</span><small>ПЕРВЫЕ 3 ПИЛОТА · ДО 31.12.2026</small></div></div>
+      <div class="price-terms"><article><h3>Что входит</h3><p>Разбор задачи, простой сценарий на тестовых данных, передача результата, короткая инструкция и одна итерация правок по согласованному объёму.</p></article><article><h3>Если проект больше</h3><p>Несколько процессов, сложные интеграции, сервер и постоянная поддержка оцениваются отдельно до начала работ. Ориентир базовой цены за простой проект после пилотов — 15 000 ₽; окончательную сумму согласуем по задаче.</p></article><article><h3>Код и права</h3><p>Условия передачи исходного кода, исключительных прав и повторного использования общей основы фиксируются отдельно в смете. Публикация кейса — только с согласия клиента.</p></article><article><h3>Не только новые приложения</h3><p>Могу изучить ваш текущий процесс и предложить доработку внутреннего инструмента, если задачу можно взять в согласованный объём.</p></article></div>
     </section>
-
+    <section class="section"><div class="wrap"><div class="section-heading"><div><h2>Инструменты</h2><p class="intro">Использую их по задаче; C++ продолжаю изучать.</p></div></div><div class="how"><article><b>ЯЗЫКИ</b><h3>Python · SQL</h3><p>Автоматизация, обработка данных и логика приложений.</p></article><article><b>В РАБОТЕ</b><h3>Make · Google</h3><p>Make, Google Sheets и Google Apps Script.</p></article><article><b>ДАННЫЕ</b><h3>Supabase</h3><p>Использую как backend и базу данных в проектах.</p></article><article><b>ИИ-ИНСТРУМЕНТЫ</b><h3>OpenAI · Claude</h3><p>Помогают исследовать варианты и ускорять разработку.</p></article></div></div></section>
     <section class="wrap contact" id="contact" aria-labelledby="contact-title">
-      <div><div class="small" style="color:var(--blue)" data-edit="contact.label">ДАВАЙТЕ НАЧНЁМ С РАЗГОВОРА</div><h2 id="contact-title" data-edit="contact.title">Что у вас давно хочется упростить?</h2></div>
-      <div class="contact-right"><p data-edit="contact.body">Напишите, что в работе хочется упростить. Я задам несколько вопросов и честно скажу, смогу ли помочь. Для начала достаточно описать задачу — без файлов и личных данных.</p><a class="button" href="https://t.me/MLumak" target="_blank" rel="noopener noreferrer"><span data-edit="contact.button">Написать в Telegram · @MLumak</span><span aria-hidden="true">↗</span></a><span class="small" data-edit="contact.note">СНАЧАЛА ОБСУДИМ ЗАДАЧУ — НИКАКИХ ДОКУМЕНТОВ ПРИСЫЛАТЬ НЕ НУЖНО.</span></div>
+      <div><div class="small" style="color:var(--blue)">ОБСУДИМ ЗАДАЧУ</div><h2 id="contact-title">Что в вашей работе пора упростить?</h2></div>
+      <div class="contact-right"><p>Напишите, что приходится делать вручную и как часто. Я задам уточняющие вопросы и скажу, какой объём решения можно предложить.</p><div class="contact-links"><a class="button" href="https://t.me/MLumak" target="_blank" rel="noopener noreferrer">Telegram · @MLumak ↗</a><a class="contact-alt" href="https://vk.ru/lumak522" target="_blank" rel="noopener noreferrer">ВКонтакте</a><a class="contact-alt" href="mailto:mlumkzh@gmail.com">mlumkzh@gmail.com</a></div></div>
     </section>
   </main>
   <footer class="wrap"><span data-edit="footer.left">МАТВЕЙ · ЦИФРОВЫЕ РЕШЕНИЯ С ЗАБОТОЙ О ЛЮДЯХ</span></footer>
   <script>
     document.documentElement.classList.add('has-js');
-    const revealItems = document.querySelectorAll('[data-reveal]');
+    const revealItems = document.querySelectorAll('[data-reveal], .section-heading, .work, .how article, .offer-card, .contact-right');
     if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
       const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -282,7 +470,7 @@
           observer.unobserve(entry.target);
         });
       }, { threshold: 0.12, rootMargin: '0px 0px -35px 0px' });
-      revealItems.forEach(item => revealObserver.observe(item));
+      revealItems.forEach((item, index) => { item.style.setProperty('--reveal-delay', `${(index % 4) * 65}ms`); revealObserver.observe(item); });
     } else {
       revealItems.forEach(item => item.classList.add('visible'));
     }
@@ -291,7 +479,6 @@
       const track = carousel.querySelector('[data-track]');
       const slides = [...track.children];
       const count = carousel.querySelector('[data-count]');
-      const dots = [...carousel.querySelectorAll('[data-slide]')];
       let current = 0;
       const show = index => {
         current = (index + slides.length) % slides.length;
@@ -301,11 +488,9 @@
           slide.setAttribute('aria-hidden', String(i !== current));
           slide.inert = i !== current;
         });
-        dots.forEach((dot, i) => dot.setAttribute('aria-current', String(i === current)));
       };
       carousel.querySelector('[data-prev]').addEventListener('click', () => show(current - 1));
       carousel.querySelector('[data-next]').addEventListener('click', () => show(current + 1));
-      dots.forEach(dot => dot.addEventListener('click', () => show(Number(dot.dataset.slide))));
       carousel.addEventListener('keydown', event => {
         if (event.key === 'ArrowLeft') { event.preventDefault(); show(current - 1); }
         if (event.key === 'ArrowRight') { event.preventDefault(); show(current + 1); }
@@ -321,25 +506,6 @@
       show(0);
     });
 
-    document.querySelectorAll('.work').forEach(card => {
-      const art = card.querySelector('.work-art');
-      card.addEventListener('pointermove', event => {
-        if (event.pointerType !== 'mouse') return;
-        const bounds = art.getBoundingClientRect();
-        const x = (event.clientX - bounds.left) / bounds.width;
-        const y = (event.clientY - bounds.top) / bounds.height;
-        art.style.setProperty('--mx', `${x * 100}%`);
-        art.style.setProperty('--my', `${y * 100}%`);
-        card.style.setProperty('--tx', `${(x - .5) * 8}px`);
-        card.style.setProperty('--ty', `${(y - .5) * 8}px`);
-      });
-      card.addEventListener('pointerleave', () => {
-        card.style.removeProperty('--tx');
-        card.style.removeProperty('--ty');
-        art.style.removeProperty('--mx');
-        art.style.removeProperty('--my');
-      });
-    });
   </script>
 
 
