@@ -87,9 +87,9 @@
     .offer-price { color: var(--blue); white-space: nowrap; font: 40px/.95 var(--serif); letter-spacing: -.05em; }
     .offer-price small { display: block; margin-top: 7px; color: var(--muted); font: 9px/1.4 var(--mono); letter-spacing: .06em; text-align: right; text-transform: uppercase; }
     .offer-foot { margin: 13px 0 0; color: var(--muted); font-size: 11px; }
-    .carousel { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .carousel { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); touch-action: pan-y pinch-zoom; overscroll-behavior-x: contain; }
     .work-list { display: flex; border: 0; transition: transform .58s cubic-bezier(.2,.7,.2,1); will-change: transform; }
-    .work { flex: 0 0 100%; width: 100%; display: grid; grid-template-columns: .92fr 1.08fr; gap: clamp(28px, 6vw, 78px); align-items: center; padding: 29px 0; }
+    .work { flex: 0 0 100%; width: 100%; min-width: 0; display: grid; grid-template-columns: .92fr 1.08fr; gap: clamp(28px, 6vw, 78px); align-items: center; padding: 29px 0; }
     .work-art { min-height: 275px; position: relative; display: grid; place-items: center; overflow: hidden; background: var(--soft-green); transition: background .35s ease; }
     .work-art::after { content: ""; position: absolute; inset: -30%; pointer-events: none; opacity: 0; background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.42), transparent 28%); transition: opacity .35s ease; }
     .work:hover .work-art::after { opacity: 1; }
@@ -116,6 +116,8 @@
     .quest-progress { height: 7px; margin: 17px 0 12px; background: #454b43; }
     .quest-progress i { display: block; width: 63%; height: 100%; background: linear-gradient(90deg, #6aa5eb, #a7c58b); }
     .quest-line { padding: 9px 0; border-top: 1px solid rgba(255,255,255,.15); color: #dedfd4; font-size: 9px; }
+    .work-copy, .work-art, .work-details { min-width: 0; }
+    .work-copy h3, .work-copy p, .work-details { overflow-wrap: anywhere; }
     .work-copy .small { color: var(--blue); }
     .work-copy h3 { margin: 0 0 14px; font: clamp(29px, 3.5vw, 41px)/1 var(--serif); font-weight: 400; letter-spacing: -.04em; }
     .work-copy p { max-width: 510px; margin: 0; color: #555a51; font-size: 14px; }
@@ -247,7 +249,9 @@
       --glass-edge: rgba(255,255,255,.82);
       --glass-shadow: 0 16px 44px rgba(31,46,69,.08), inset 0 1px 0 rgba(255,255,255,.8);
     }
+    html { overflow-x:clip; }
     body {
+      overflow-x: hidden; overflow-x: clip;
       background:
         radial-gradient(ellipse at 78% 8%, rgba(197,217,249,.34), transparent 32rem),
         radial-gradient(ellipse at 8% 52%, rgba(217,229,198,.24), transparent 28rem),
@@ -318,7 +322,8 @@
     .work-art.paper { background: linear-gradient(145deg, rgba(255,255,255,.78), rgba(227,232,222,.68)); }
     .work-art:not(.blue):not(.paper) { background: linear-gradient(145deg, rgba(225,233,213,.78), rgba(236,240,230,.68)); }
     .work:hover .work-art { transform: translateY(-3px); box-shadow: 0 20px 48px rgba(31,46,69,.12), inset 0 1px 0 white; }
-    .plan-art { border: 1px solid rgba(255,255,255,.9); border-radius: 16px; background: rgba(255,255,255,.68); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+    .plan-art { width:min(92%,360px); border: 1px solid rgba(255,255,255,.9); border-radius: 16px; background: rgba(255,255,255,.68); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+    .plan-art .result strong { font-size:clamp(24px,7vw,34px); white-space:nowrap; }
     .paper-doc { border: 1px solid rgba(255,255,255,.9); border-radius: 8px; box-shadow: 0 8px 24px rgba(40,50,65,.08); }
     .quest-art { border: 1px solid rgba(255,255,255,.25); border-radius: 16px; background: rgba(30,39,51,.88); box-shadow: 0 16px 36px rgba(26,33,45,.12); }
     .carousel { border: 1px solid rgba(255,255,255,.8); border-radius: 24px; padding: 0 22px 14px; background: rgba(255,255,255,.28); box-shadow: 0 16px 40px rgba(31,46,69,.04); }
@@ -373,10 +378,10 @@
     @media(max-width:520px) {
       body { background-attachment: scroll; }
       .topbar { border-radius: 0 0 16px 16px; }
-      .hero { min-height: 0; padding-top: 38px; padding-bottom: 50px; }
+      .hero { min-height: 0; padding-top: 38px; padding-bottom: 166px; }
       .hero-copy { max-width: 100%; }
-      .hero::before { width: 155px; right: -16px; top: 10px; transform: none; opacity:.45; }
-      .hero::after { width: 120px; right: 0; top: 28px; transform: rotate(-18deg); opacity:.5; }
+      .hero::before { width: 132px; right: 8%; top: auto; bottom: 12px; transform: none; opacity:.92; animation:none; }
+      .hero::after { width: 112px; right: calc(8% - 9px); top: auto; bottom: 22px; transform: rotate(-18deg); opacity:.72; animation:none; }
       .about-photo { border-radius: 17px; }
       .carousel { padding-inline: 12px; border-radius: 18px; }
       .work-art { border-radius: 18px; }
@@ -495,13 +500,19 @@
         if (event.key === 'ArrowLeft') { event.preventDefault(); show(current - 1); }
         if (event.key === 'ArrowRight') { event.preventDefault(); show(current + 1); }
       });
-      let touchX = null;
-      carousel.addEventListener('touchstart', event => { touchX = event.changedTouches[0].clientX; }, { passive: true });
+      let touchStart = null;
+      carousel.addEventListener('touchstart', event => {
+        const t = event.changedTouches[0];
+        touchStart = { x: t.clientX, y: t.clientY };
+      }, { passive: true });
+      carousel.addEventListener('touchcancel', () => { touchStart = null; }, { passive: true });
       carousel.addEventListener('touchend', event => {
-        if (touchX === null) return;
-        const distance = event.changedTouches[0].clientX - touchX;
-        if (Math.abs(distance) > 45) show(current + (distance < 0 ? 1 : -1));
-        touchX = null;
+        if (!touchStart) return;
+        const t = event.changedTouches[0];
+        const dx = t.clientX - touchStart.x;
+        const dy = t.clientY - touchStart.y;
+        if (Math.abs(dx) > 42 && Math.abs(dx) > Math.abs(dy) * 1.25) show(current + (dx < 0 ? 1 : -1));
+        touchStart = null;
       }, { passive: true });
       show(0);
     });
